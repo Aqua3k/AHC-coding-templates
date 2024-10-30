@@ -1,3 +1,2 @@
-# TspSolveProgram
-焼きなまし法練習用のためのTSPを解くプログラム  
-気が向いたときに修正予定
+# AHC-coding-templates
+主にAHCで使用するテンプレートやスニペットを管理するためのリポジトリ
