@@ -23,5 +23,4 @@ def visualize(tsp: Tsp, tour_list: list[int]):
     plt.xlim(tsp.min_x, tsp.max_x)
     plt.ylim(tsp.min_y, tsp.max_y)
 
-    plt.savefig("fig.png")
     plt.show()
