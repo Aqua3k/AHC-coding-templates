@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 import random
+import atexit
 
 from simulateda_annealing import SimulatedaAnnealingTemplate, DiffRecord
-from tsp.generator import Tsp, generate
-from tsp.visualizer import visualize
+from tsp.utility import Tsp, generate, visualize
 from timer import Timer
 
 def _get_dist(tsp: Tsp, idx1: int, idx2: int):
@@ -33,6 +33,7 @@ class TspSolver(SimulatedaAnnealingTemplate):
     def should_terminate(self) -> bool:
         return self.timelimit < Timer.get_elapsed_time()
 
+    @Timer.measure
     def dry_run(self, tour_list: TourList, sum_of_dist: float) -> tuple[DiffRecord, float]:
         idx1 = random.randint(0, self.tsp.size - 1)
         idx2 = random.randint(0, self.tsp.size - 2)
@@ -47,6 +48,7 @@ class TspSolver(SimulatedaAnnealingTemplate):
              + _get_dist(self.tsp, tour_list[idx1+1], tour_list[(idx2+1)%tsp.size])
         return _TspDiffRecord(idx1, idx2), sum_of_dist - dist_pre + dist_aft
 
+    @Timer.measure
     def operate(self, tour_list: TourList, diff: _TspDiffRecord) -> TourList:
         x, y = diff.swapped1 + 1, diff.swapped2
         while x < y:
@@ -56,6 +58,7 @@ class TspSolver(SimulatedaAnnealingTemplate):
         return tour_list
 
 if __name__ == "__main__":
+    atexit.register(Timer.show)
     tsp = generate()
     solver = TspSolver(tsp)
     initial_tour_list = [i for i in range(tsp.size)]
