@@ -1,11 +1,13 @@
+#TODO 正しく動くか確認する
+
 import random
 import math
 from copy import deepcopy
+from typing import Any
+
+Status = Any
 
 class DiffRecord:
-    pass
-
-class Problem:
     pass
 
 class SimulatedaAnnealingTemplate:
@@ -18,7 +20,7 @@ class SimulatedaAnnealingTemplate:
     def get_evaluated_value(self) -> int:
         pass
 
-    def solve(self, initial_status: Problem, temperture: int|float, rate: float) -> Problem:
+    def solve(self, initial_status: Status, temperture: int|float, rate: float) -> Status:
         score = self.get_evaluated_value()
         best_score = score
 
@@ -46,9 +48,9 @@ class SimulatedaAnnealingTemplate:
         
         return best_status
 
-    def operate(self, problem: Problem) -> tuple[DiffRecord, Problem, int]:
+    def operate(self, status: Status) -> tuple[DiffRecord, Status, int]:
         pass
 
-    def revert(self, problem: Problem, diff: DiffRecord) -> Problem:
+    def revert(self, status: Status, diff: DiffRecord) -> Status:
         pass
 
