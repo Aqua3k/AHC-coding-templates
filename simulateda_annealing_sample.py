@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import random
 import atexit
 
-from simulateda_annealing import SimulatedaAnnealingTemplate, DiffRecord
+from simulateda_annealing import SimulatedaAnnealingTemplate
 from tsp.utility import Tsp, generate, visualize
 from timer import Timer
 
@@ -14,7 +14,7 @@ def _get_dist(tsp: Tsp, idx1: int, idx2: int):
 TourList = list[int]
 
 @dataclass
-class _TspDiffRecord(DiffRecord):
+class TspDiff:
     swapped1: int
     swapped2: int
 
@@ -22,8 +22,11 @@ class TspSolver(SimulatedaAnnealingTemplate):
     def __init__(self, tsp: Tsp, timelimit: int=10):
         self.timelimit = timelimit
         self.tsp = tsp
+        initial_tour_list = [i for i in range(self.tsp.size)]
+        initial_score = self._get_sum_of_dist(initial_tour_list)
+        super().__init__(initial_tour_list, initial_score)
 
-    def get_evaluated_value(self, tour_list):
+    def _get_sum_of_dist(self, tour_list: TourList) -> float:
         sum_of_dist = 0
         for i in range(tsp.size - 1):
             sum_of_dist += _get_dist(self.tsp, tour_list[i], tour_list[i+1])
@@ -34,7 +37,7 @@ class TspSolver(SimulatedaAnnealingTemplate):
         return self.timelimit < Timer.get_elapsed_time()
 
     @Timer.measure
-    def dry_run(self, tour_list: TourList, sum_of_dist: float) -> tuple[DiffRecord, float]:
+    def dry_run(self, tour_list: TourList, sum_of_dist: float) -> tuple[TspDiff, float]:
         idx1 = random.randint(0, self.tsp.size - 1)
         idx2 = random.randint(0, self.tsp.size - 2)
         if idx1 <= idx2:
@@ -46,10 +49,10 @@ class TspSolver(SimulatedaAnnealingTemplate):
              + _get_dist(self.tsp, tour_list[idx2], tour_list[(idx2+1)%tsp.size])
         dist_aft = _get_dist(self.tsp, tour_list[idx1], tour_list[idx2])\
              + _get_dist(self.tsp, tour_list[idx1+1], tour_list[(idx2+1)%tsp.size])
-        return _TspDiffRecord(idx1, idx2), sum_of_dist - dist_pre + dist_aft
+        return TspDiff(idx1, idx2), sum_of_dist - dist_pre + dist_aft
 
     @Timer.measure
-    def operate(self, tour_list: TourList, diff: _TspDiffRecord) -> TourList:
+    def operate(self, tour_list: TourList, diff: TspDiff) -> TourList:
         x, y = diff.swapped1 + 1, diff.swapped2
         while x < y:
             tour_list[x],tour_list[y] = tour_list[y], tour_list[x]
@@ -61,6 +64,5 @@ if __name__ == "__main__":
     atexit.register(Timer.show)
     tsp = generate()
     solver = TspSolver(tsp)
-    initial_tour_list = [i for i in range(tsp.size)]
-    result = solver.solve(initial_tour_list, 100, 0.999)
+    result = solver.optimize(100, 0.999)
     visualize(tsp, result)
