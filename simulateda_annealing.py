@@ -4,10 +4,8 @@ from copy import deepcopy
 from typing import Any
 
 Status = Any
+Diff = Any
 Score = int|float
-
-class DiffRecord:
-    pass
 
 class SimulatedaAnnealingTemplate:
     def should_terminate(self) -> bool:
@@ -16,7 +14,7 @@ class SimulatedaAnnealingTemplate:
     def get_evaluated_value(self, status: Status) -> Score:
         pass
 
-    def solve(self, initial_status: Status, temperture: int|float, rate: float) -> Status:
+    def solve(self, initial_status: Status, temperature: int|float, rate: float) -> Status:
         score = self.get_evaluated_value(initial_status)
         best_score = score
 
@@ -25,7 +23,7 @@ class SimulatedaAnnealingTemplate:
 
         while not self.should_terminate():
             diff, new_score = self.dry_run(status, score)
-            t = (score - new_score) / temperture
+            t = (score - new_score) / temperature
             if t >= 1.0:
                 swap = True
             else:
@@ -38,13 +36,13 @@ class SimulatedaAnnealingTemplate:
                     best_score = score
                     best_status = deepcopy(status)
             
-            temperture *= rate
+            temperature *= rate
         
         return best_status
 
-    def dry_run(self, status: Status, score: Score) -> tuple[DiffRecord, Score]:
+    def dry_run(self, status: Status, score: Score) -> tuple[Diff, Score]:
         pass
 
-    def operate(self, status: Status, diff: DiffRecord) -> Status:
+    def operate(self, status: Status, diff: Diff) -> Status:
         pass
 
