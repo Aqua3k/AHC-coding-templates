@@ -8,18 +8,19 @@ Diff = Any
 Score = int|float
 
 class SimulatedaAnnealingTemplate:
+    def __init__(self, initial_status: Status, initial_score: Score):
+        self.initial_status = initial_status
+        self.initial_score = initial_score
+
     def should_terminate(self) -> bool:
         pass
 
-    def get_evaluated_value(self, status: Status) -> Score:
-        pass
-
-    def solve(self, initial_status: Status, temperature: int|float, rate: float) -> Status:
-        score = self.get_evaluated_value(initial_status)
+    def optimize(self, temperature: int|float, rate: float) -> Status:
+        score = self.initial_score
         best_score = score
 
-        status = initial_status
-        best_status = initial_status
+        status = self.initial_status
+        best_status = status
 
         while not self.should_terminate():
             diff, new_score = self.dry_run(status, score)
