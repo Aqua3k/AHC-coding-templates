@@ -1,11 +1,11 @@
-from recorder import Recorder
+from .. import recorder
 import json
 
 if __name__ == "__main__":
-    Recorder.regist("time", 1)
-    Recorder.regist("score", 1.23)
-    data = Recorder.registed_data
+    recorder.Recorder.regist("time", 1)
+    recorder.Recorder.regist("score", 1.23)
+    data = recorder.Recorder.registed_data
     dumped_data = json.dumps(data)
-    result = Recorder.get_registed_data(f"# @Recorder: {dumped_data}")
+    result = recorder.Recorder.get_registed_data(f"# @recorder.Recorder: {dumped_data}")
     print(data)
     print("result", result)
