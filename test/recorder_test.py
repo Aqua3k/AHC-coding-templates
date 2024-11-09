@@ -1,11 +1,13 @@
-from .. import recorder
-import json
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+from recorder import Recorder
+import subprocess
 
 if __name__ == "__main__":
-    recorder.Recorder.regist("time", 1)
-    recorder.Recorder.regist("score", 1.23)
-    data = recorder.Recorder.registed_data
-    dumped_data = json.dumps(data)
-    result = recorder.Recorder.get_registed_data(f"# @recorder.Recorder: {dumped_data}")
+    cmd = f"python test/subprocess_with_recorder.py"
+    proc = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+    data = Recorder.get_registed_data(proc.stderr)
     print(data)
-    print("result", result)
