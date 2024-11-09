@@ -8,16 +8,15 @@ import pytest
 
 from recorder import Recorder
 
-def get_data(strderr):
-    ret = Recorder.get_registed_data(strderr)
+def run_and_get_result(command):
+    proc = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    ret = Recorder.get_registed_data(proc.stderr)
     # 戻り値がdict型であること
     assert type(ret) is dict
     return ret
 
 def test_recorder_get_normal_data():
-    cmd = f"python tests/subprocess_with_recorder.py"
-    proc = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    data = get_data(proc.stderr)
+    data = run_and_get_result("python tests/subprocess_with_recorder.py")
 
     from tests.subprocess_with_recorder import test_data
 
@@ -32,9 +31,7 @@ def test_recorder_get_normal_data():
         assert value == test_value
 
 def test_recorder_get_no_data():
-    cmd = f"python tests/subprocess_without_recorder.py"
-    proc = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    data = get_data(proc.stderr)
+    data = run_and_get_result("python tests/subprocess_without_recorder.py")
 
     # データが空であること
     assert data == {}
