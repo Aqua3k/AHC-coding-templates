@@ -8,7 +8,7 @@ Diff = Any
 Score = int|float
 
 class SimulatedaAnnealingTemplate:
-    def __init__(self, initial_status: Status, initial_score: Score):
+    def __init__(self, initial_status: Status, initial_score: Score) -> None:
         """コンストラクタ
 
         Args:
