@@ -2,13 +2,14 @@ import random
 import math
 from copy import deepcopy
 from typing import Any
+from abc import ABC, abstractmethod
 
 Status = Any
 Diff = Any
 Score = int|float
 
-class SimulatedaAnnealingTemplate:
-    def __init__(self, initial_status: Status, initial_score: Score):
+class SimulatedaAnnealingTemplate(ABC):
+    def __init__(self, initial_status: Status, initial_score: Score) -> None:
         """コンストラクタ
 
         Args:
@@ -18,10 +19,12 @@ class SimulatedaAnnealingTemplate:
         self.initial_status = initial_status
         self.initial_score = initial_score
 
+    @abstractmethod
     def should_terminate(self) -> bool:
         """焼きまなしを終了するか判定する
 
         焼きなましの各ループでコールされる
+        サブクラスで実装すること
 
         Returns:
             bool: True(終了)/False(続行)
@@ -63,8 +66,11 @@ class SimulatedaAnnealingTemplate:
         
         return best_status
 
+    @abstractmethod
     def dry_run(self, status: Status, score: Score) -> tuple[Diff, Score]:
         """何かの操作を仮実行した場合の評価を行う
+
+        サブクラスで実装すること
 
         Args:
             status (Status): 現在の解の状態
@@ -75,8 +81,11 @@ class SimulatedaAnnealingTemplate:
         """
         pass
 
+    @abstractmethod
     def operate(self, status: Status, diff: Diff) -> Status:
         """実際にDiffに対する操作を行う
+
+        サブクラスで実装すること
 
         Args:
             status (Status): 現在の解の状態
@@ -86,4 +95,3 @@ class SimulatedaAnnealingTemplate:
             Status: 操作後の解の状態
         """
         pass
-
