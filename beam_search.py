@@ -1,11 +1,12 @@
 from typing import Any
 from heapq import heapify, heappushpop, heappush
+from abc import ABC, abstractmethod
 
 Status = Any
 Diff = Any
 Score = int|float
 
-class BeamSearchTemplate:
+class BeamSearchTemplate(ABC):
     def __init__(self, beam_width: int) -> None:
         """コンストラクタ
 
@@ -16,8 +17,11 @@ class BeamSearchTemplate:
         self.beam_width = beam_width
         self.top_paths: list[tuple[Score, Status]] = []
 
+    @abstractmethod
     def step(self, status: Status) -> None:
         """次の状態を探す
+
+        サブクラスで実装すること
 
         Args:
             status (Status): 現在の解の状態
@@ -26,11 +30,16 @@ class BeamSearchTemplate:
 
     def turn_elapsed(self) -> None:
         """1階層分経過したことを通知する
+
+        必要あればオーバーライドすること
         """
         pass
 
+    @abstractmethod
     def should_terminate(self) -> bool:
         """探索を終了すべきか判断する
+
+        サブクラスで実装すること
 
         Returns:
             bool: True: 探索終了 / False: 探索を続ける
