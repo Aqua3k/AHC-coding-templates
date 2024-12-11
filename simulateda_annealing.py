@@ -86,4 +86,3 @@ class SimulatedaAnnealingTemplate:
             Status: 操作後の解の状態
         """
         pass
-
