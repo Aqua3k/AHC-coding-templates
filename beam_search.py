@@ -1,6 +1,7 @@
 from typing import Any
 from heapq import heapify, heappushpop, heappush
 from abc import ABC, abstractmethod
+import sys
 
 Status = Any
 Diff = Any
@@ -33,7 +34,7 @@ class BeamSearchTemplate(ABC):
 
         必要あればオーバーライドすること
         """
-        pass
+        print(f"Turn {self.depth + 1} completed.", file=sys.stderr)
 
     @abstractmethod
     def should_terminate(self) -> bool:
@@ -75,12 +76,12 @@ class BeamSearchTemplate(ABC):
             initial_status (Status): 初期状態
 
         Returns:
-            list[tuple[Score, Status]]: 求めた解
+            list[tuple[Score, Status]]: ビームサーチで残ったスコアと状態のリスト
         """
         paths: list[tuple[Score, Status]] = [(0, initial_status)]
         heapify(paths)
         while not self.should_terminate():
-            self.top_paths: list[tuple[int, Status]] = []
+            self.top_paths: list[tuple[Score, Status]] = []
             heapify(self.top_paths)
             for _, path in paths:
                 self.step(path)
