@@ -1,0 +1,41 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Python Debug",
+        "type": "python",
+        "request": "launch",
+        "program": "${file}",
+        "console": "integratedTerminal",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/python"
+        }
+      },
+      {
+        "name": "C++ Debug",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/cpp/build/${fileBasenameNoExtension}",
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}/cpp",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "setupCommands": [
+          { "description": "Enable pretty-printing for gdb", "text": "-enable-pretty-printing" }
+        ],
+        "preLaunchTask": "build-cpp"
+      },
+      {
+        "name": "Rust Debug",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/rust/target/debug/rust",  // Cargoでビルドしたバイナリ
+        "cwd": "${workspaceFolder}/rust",
+        "args": [],
+        "preLaunchTask": "Build Rust"
+    }
+    ]
+  }
+  
