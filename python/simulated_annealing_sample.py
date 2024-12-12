@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import random
 import atexit
 
-from simulateda_annealing import SimulatedaAnnealingTemplate
+from simulated_annealing import SimulatedaAnnealingTemplate
 from tsp.utility import Tsp, generate, visualize
 from timer import Timer
 
