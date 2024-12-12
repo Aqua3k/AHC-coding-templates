@@ -2,11 +2,20 @@
     "version": "2.0.0",
     "tasks": [
       {
-        "label": "Build C++",
+        "label": "build-cpp",  // ビルドタスクの名前
         "type": "shell",
-        "command": "cmake",
-        "args": ["--build", "${workspaceFolder}/cpp/build"],
-        "group": { "kind": "build", "isDefault": true }
+        "command": "g++",
+        "args": [
+            "-g",  // デバッグ情報を含む
+            "${file}",
+            "-o",
+            "${workspaceFolder}/cpp/build/${fileBasenameNoExtension}"
+        ],
+        "group": {
+            "kind": "build",
+            "isDefault": true
+        },
+        "problemMatcher": ["$gcc"],
       },
       {
         "label": "Build Rust",

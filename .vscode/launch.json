@@ -15,7 +15,7 @@
         "name": "C++ Debug",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/cpp/build/main", 
+        "program": "${workspaceFolder}/cpp/build/${fileBasenameNoExtension}",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}/cpp",
@@ -24,7 +24,8 @@
         "MIMode": "gdb",
         "setupCommands": [
           { "description": "Enable pretty-printing for gdb", "text": "-enable-pretty-printing" }
-        ]
+        ],
+        "preLaunchTask": "build-cpp"
       },
       {
         "name": "Rust Debug",
