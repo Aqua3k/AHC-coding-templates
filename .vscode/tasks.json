@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Build C++",
+        "type": "shell",
+        "command": "cmake",
+        "args": ["--build", "${workspaceFolder}/cpp/build"],
+        "group": { "kind": "build", "isDefault": true }
+      },
+      {
+        "label": "Build Rust",
+        "type": "shell",
+        "command": "cargo",
+        "args": ["build"],
+        "group": { "kind": "build", "isDefault": true },
+        "options": { "cwd": "${workspaceFolder}/rust" }
+      }
+    ]
+  }
+  

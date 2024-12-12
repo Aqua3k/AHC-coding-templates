@@ -1,0 +1,38 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "C++ Debug",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/cpp/build/main", 
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}/cpp",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "setupCommands": [
+          { "description": "Enable pretty-printing for gdb", "text": "-enable-pretty-printing" }
+        ]
+      },
+      {
+        "name": "Python Debug",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/python/main.py",
+        "console": "integratedTerminal",
+        "python": "${workspaceFolder}/python/venv/bin/python"  // 仮想環境を指定
+          
+      },
+      {
+        "name": "Rust Debug",
+        "type": "lldb",
+        "request": "launch",
+        "program": "${workspaceFolder}/rust/target/debug/my_project",
+        "cwd": "${workspaceFolder}/rust",
+        "args": []
+      }
+    ]
+  }
+  
