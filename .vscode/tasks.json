@@ -21,7 +21,9 @@
         "label": "Build Rust",
         "type": "shell",
         "command": "cargo",
-        "args": ["build"],
+        "args": [
+          "build",
+        ],
         "group": { "kind": "build", "isDefault": true },
         "options": { "cwd": "${workspaceFolder}/rust" }
       }

@@ -29,12 +29,13 @@
       },
       {
         "name": "Rust Debug",
-        "type": "lldb",
+        "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/rust/target/debug/my_project",
+        "program": "${workspaceFolder}/rust/target/debug/rust",  // Cargoでビルドしたバイナリ
         "cwd": "${workspaceFolder}/rust",
-        "args": []
-      }
+        "args": [],
+        "preLaunchTask": "Build Rust"
+    }
     ]
   }
   
