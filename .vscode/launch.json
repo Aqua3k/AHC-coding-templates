@@ -2,6 +2,16 @@
     "version": "0.2.0",
     "configurations": [
       {
+        "name": "Python Debug",
+        "type": "python",
+        "request": "launch",
+        "program": "${file}",
+        "console": "integratedTerminal",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/python"
+        }
+      },
+      {
         "name": "C++ Debug",
         "type": "cppdbg",
         "request": "launch",
@@ -15,15 +25,6 @@
         "setupCommands": [
           { "description": "Enable pretty-printing for gdb", "text": "-enable-pretty-printing" }
         ]
-      },
-      {
-        "name": "Python Debug",
-        "type": "python",
-        "request": "launch",
-        "program": "${workspaceFolder}/python/main.py",
-        "console": "integratedTerminal",
-        "python": "${workspaceFolder}/python/venv/bin/python"  // 仮想環境を指定
-          
       },
       {
         "name": "Rust Debug",
