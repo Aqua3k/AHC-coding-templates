@@ -3,6 +3,7 @@
     "./python"
   ],
   "files.associations": {
-    "ostream": "cpp"
+    "ostream": "cpp",
+    "tuple": "cpp"
   }
 }
