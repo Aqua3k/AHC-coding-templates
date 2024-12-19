@@ -1,3 +1,9 @@
 {
-  "python.analysis.extraPaths": ["./python"]
+  "python.analysis.extraPaths": [
+    "./python"
+  ],
+  "files.associations": {
+    "ostream": "cpp",
+    "tuple": "cpp"
+  }
 }
